@@ -1,0 +1,30 @@
+version: '3'
+networks:
+  mynetwork:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+services:
+   devoluciones_impresion:
+    build:
+      context: ../../../ 
+      dockerfile: src/main/docker/Dockerfile 
+    ports:
+      - '8088:8088'
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - ./target:/app/target
+    extra_hosts:
+      - 'serverdb:192.168.14.224'
+    networks:
+      mynetwork:
+        ipv4_address: 172.20.0.20
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
+volumes:
+  devoluciones_impresion:
+

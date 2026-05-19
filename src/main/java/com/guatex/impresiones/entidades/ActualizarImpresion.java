@@ -3,7 +3,7 @@ package com.guatex.impresiones.entidades;
 public class ActualizarImpresion {
 
     private String noguia;
-    private String ip;
+    private String impreso;
 
     public String getNoguia() {
         return noguia;
@@ -13,11 +13,11 @@ public class ActualizarImpresion {
         this.noguia = noguia;
     }
 
-    public String getIp() {
-        return ip;
+    public String getImpreso() {
+        return impreso;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setIp(String imp) {
+        this.impreso = imp;
     }
 }

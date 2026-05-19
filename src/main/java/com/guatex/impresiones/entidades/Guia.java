@@ -306,13 +306,13 @@ public class Guia {
 	}
 
 	private String spaces(String txt) {
-		return (txt.replaceAll("\\s+", " ").replaceAll("\\.NULL\\.", "").replaceAll("\\bNULL\\b", "").replaceAll("\\bNULO\\b", "")).trim();
+		return (txt.replaceAll("\\s+", " ").replaceAll("\\.NULL\\.", "").replaceAll("\\bNULL\\b", "")
+				.replaceAll("\\bNULO\\b", "")).trim();
 	}
 
 	@Override
 	public String toString() {
-		return numeroGuia + "-" + piezas;
+		return numeroGuia + "-" + piezas + " - PTOORI: " + puntoOrigen + " PTODES: " + puntoDestino;
 	}
-	
-	
+
 }

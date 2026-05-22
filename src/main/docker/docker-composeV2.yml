@@ -16,7 +16,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - ./target:/app/target
     extra_hosts:
-      - 'serverdb:192.168.14.224'
+      - 'serverdb:192.168.11.6'
     networks:
       mynetwork:
         ipv4_address: 172.20.0.20

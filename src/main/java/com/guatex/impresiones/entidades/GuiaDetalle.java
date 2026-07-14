@@ -1,5 +1,7 @@
 package com.guatex.impresiones.entidades;
 
+import com.guatex.impresiones.datos.Utils;
+
 /**
  * 
  * @author ESTEFANIECM
@@ -20,7 +22,7 @@ public class GuiaDetalle {
 	}
 
 	public void setLinea(String linea) {
-		this.linea = quitaNulo(linea);
+		this.linea = Utils.quitaNulo(linea);
 	}
 
 	public String getPiezas() {
@@ -28,7 +30,7 @@ public class GuiaDetalle {
 	}
 
 	public void setPiezas(String piezas) {
-		this.piezas = quitaNulo(piezas);
+		this.piezas = Utils.quitaNulo(piezas);
 	}
 
 	public String getTipoEnvio() {
@@ -36,7 +38,7 @@ public class GuiaDetalle {
 	}
 
 	public void setTipoEnvio(String tipoEnvio) {
-		this.tipoEnvio = quitaNulo(tipoEnvio);
+		this.tipoEnvio = Utils.quitaNulo(tipoEnvio);
 	}
 
 	public String getPeso() {
@@ -44,7 +46,7 @@ public class GuiaDetalle {
 	}
 
 	public void setPeso(String peso) {
-		this.peso = quitaNulo(peso);
+		this.peso = Utils.quitaNulo(peso);
 	}
 
 	public String getTarifa() {
@@ -52,7 +54,7 @@ public class GuiaDetalle {
 	}
 
 	public void setTarifa(String tarifa) {
-		String t = quitaNulo(tarifa);
+		String t = Utils.quitaNulo(tarifa);
 		if (t.isEmpty()) {
 			this.tarifa = "0.00";
 		} else {
@@ -66,7 +68,7 @@ public class GuiaDetalle {
 	}
 
 	public void setManual(String manual) {
-		this.manual = quitaNulo(manual);
+		this.manual = Utils.quitaNulo(manual);
 	}
 
 	public String getpBultos() {
@@ -74,7 +76,7 @@ public class GuiaDetalle {
 	}
 
 	public void setpBultos(String pBultos) {
-		this.pBultos = quitaNulo(pBultos);
+		this.pBultos = Utils.quitaNulo(pBultos);
 	}
 
 	public String getNumeroGuia() {
@@ -82,13 +84,9 @@ public class GuiaDetalle {
 	}
 
 	public void setNumeroGuia(String numeroGuia) {
-		this.numeroGuia = quitaNulo(numeroGuia);
+		this.numeroGuia = Utils.quitaNulo(numeroGuia);
 	}
-
-	private String quitaNulo(String txt) {
-		return txt == null ? "" : txt.trim();
-	}
-
+	
 	@Override
 	public String toString() {
 		return "E_GuiaDetalle [linea=" + linea + ", piezas=" + piezas + ", tipoEnvio=" + tipoEnvio + ", peso=" + peso

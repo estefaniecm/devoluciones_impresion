@@ -3,6 +3,8 @@ package com.guatex.impresiones.entidades;
 import java.io.Serializable;
 import java.util.List;
 
+import com.guatex.impresiones.datos.Utils;
+
 /**
  *
  * @author ESTEFANIECM
@@ -36,7 +38,7 @@ public class AplicacionAgente implements Serializable {
 	}
 
 	public void setCODIGOVERSION(String CODIGOVERSION) {
-		this.codigoversion = quitaNulo(CODIGOVERSION);
+		this.codigoversion = Utils.quitaNulo(CODIGOVERSION);
 	}
 
 	public String getJARHASH() {
@@ -44,10 +46,7 @@ public class AplicacionAgente implements Serializable {
 	}
 
 	public void setJARHASH(String JARHASH) {
-		this.jarjash = quitaNulo(JARHASH);
+		this.jarjash = Utils.quitaNulo(JARHASH);
 	}
 
-	private String quitaNulo(String txt) {
-		return txt == null ? "" : txt.trim();
-	}
 }

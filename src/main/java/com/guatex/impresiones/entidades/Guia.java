@@ -2,6 +2,8 @@ package com.guatex.impresiones.entidades;
 
 import java.util.List;
 
+import com.guatex.impresiones.datos.Utils;
+
 /**
  * 
  * @author ESTEFANIECM
@@ -41,12 +43,95 @@ public class Guia {
 	private String recoleccionEntrega = "";
 	private String tipoCobro = "";
 
+	// Guía Solución
+	private String tipoGuia = "";
+	private String razonNoEntrega = "";
+	private String solucionTipo = "";
+	private String solucionUbicacionActual = "";
+	private String solucionDireccion = "";
+	private String solucionTelefono = "";
+	private String solucionDetalle = "";
+	private String solucionUsuarioRegistro = "";
+	private String solucionFechaRegistro = "";
+
+	public String getSolucionUsuarioRegistro() {
+		return solucionUsuarioRegistro;
+	}
+
+	public void setSolucionUsuarioRegistro(String solucionUsuarioRegistro) {
+		this.solucionUsuarioRegistro = spaces(Utils.quitaNulo(solucionUsuarioRegistro));
+	}
+
+	public String getSolucionFechaRegistro() {
+		return solucionFechaRegistro;
+	}
+
+	public void setSolucionFechaRegistro(String solucionFechaRegistro) {
+		this.solucionFechaRegistro = spaces(Utils.quitaNulo(solucionFechaRegistro));
+	}
+
+	public String getSolucionUbicacionActual() {
+		return solucionUbicacionActual;
+	}
+
+	public void setSolucionUbicacionActual(String solucionUbicacionActual) {
+		this.solucionUbicacionActual = spaces(Utils.quitaNulo(solucionUbicacionActual));
+	}
+
+	public String getSolucionDireccion() {
+		return solucionDireccion;
+	}
+
+	public void setSolucionDireccion(String solucionDireccion) {
+		this.solucionDireccion = spaces(Utils.quitaNulo(solucionDireccion));
+	}
+
+	public String getSolucionUsrRegistro() {
+		return solucionUsuarioRegistro;
+	}
+
+	public void setSolucionUsrRegistro(String solucionUsrRegistro) {
+		this.solucionUsuarioRegistro = spaces(Utils.quitaNulo(solucionUsrRegistro));
+	}
+
+	public String getTipoGuia() {
+		return tipoGuia;
+	}
+
+	public void setTipoGuia(String tipoGuia) {
+		this.tipoGuia = spaces(Utils.quitaNulo(tipoGuia));
+	}
+
+	public String getRazonNoEntrega() {
+		return razonNoEntrega;
+	}
+
+	public void setRazonNoEntrega(String razonNoEntrega) {
+		this.razonNoEntrega = spaces(Utils.quitaNulo(razonNoEntrega));
+	}
+
+	public String getSolucionTipo() {
+		return solucionTipo;
+	}
+
+	public void setSolucionTipo(String solucionTipo) {
+		this.solucionTipo = spaces(Utils.quitaNulo(solucionTipo));
+	}
+
+	public String getSolucionDetalle() {
+		return solucionDetalle;
+	}
+
+	public void setSolucionDetalle(String solucionDetalle) {
+		this.solucionDetalle = spaces(Utils.quitaNulo(solucionDetalle));
+	}
+
 	public String getRecogeOficina() {
 		return recogeOficina;
 	}
 
 	public void setRecogeOficina(String recogeOficina) {
-		this.recogeOficina = spaces(quitaNulo(recogeOficina));
+		this.recogeOficina = spaces(Utils.quitaNulo(recogeOficina));
 	}
 
 	public String getLlaveCliente() {
@@ -54,7 +139,7 @@ public class Guia {
 	}
 
 	public void setLlaveCliente(String llaveCliente) {
-		this.llaveCliente = spaces(quitaNulo(llaveCliente));
+		this.llaveCliente = spaces(Utils.quitaNulo(llaveCliente));
 	}
 
 	public String getGuiaMadre() {
@@ -62,7 +147,7 @@ public class Guia {
 	}
 
 	public void setGuiaMadre(String guiaMadre) {
-		this.guiaMadre = quitaNulo(guiaMadre);
+		this.guiaMadre = spaces(Utils.quitaNulo(guiaMadre));
 	}
 
 	public String getPuntoDestino() {
@@ -70,7 +155,7 @@ public class Guia {
 	}
 
 	public void setPuntoDestino(String puntoDestino) {
-		this.puntoDestino = spaces(quitaNulo(puntoDestino));
+		this.puntoDestino = spaces(Utils.quitaNulo(puntoDestino));
 	}
 
 	public String getPuntoOrigen() {
@@ -78,7 +163,7 @@ public class Guia {
 	}
 
 	public void setPuntoOrigen(String puntoOrigen) {
-		this.puntoOrigen = spaces(quitaNulo(puntoOrigen));
+		this.puntoOrigen = spaces(Utils.quitaNulo(puntoOrigen));
 	}
 
 	public String getTarifa() {
@@ -86,7 +171,7 @@ public class Guia {
 	}
 
 	public void setTarifa(String tarifa) {
-		this.tarifa = spaces(quitaNulo(tarifa));
+		this.tarifa = spaces(Utils.quitaNulo(tarifa));
 	}
 
 	public String getFormaPago() {
@@ -94,7 +179,7 @@ public class Guia {
 	}
 
 	public void setFormaPago(String formaPago) {
-		this.formaPago = spaces(quitaNulo(formaPago));
+		this.formaPago = spaces(Utils.quitaNulo(formaPago));
 	}
 
 	public String getRecoleccionEntrega() {
@@ -102,7 +187,7 @@ public class Guia {
 	}
 
 	public void setRecoleccionEntrega(String recoleccionEntrega) {
-		this.recoleccionEntrega = spaces(quitaNulo(recoleccionEntrega));
+		this.recoleccionEntrega = spaces(Utils.quitaNulo(recoleccionEntrega));
 	}
 
 	public String getNumeroGuia() {
@@ -110,7 +195,7 @@ public class Guia {
 	}
 
 	public void setNumeroGuia(String numeroGuia) {
-		this.numeroGuia = spaces(quitaNulo(numeroGuia));
+		this.numeroGuia = spaces(Utils.quitaNulo(numeroGuia));
 	}
 
 	public String getNombreRemitente() {
@@ -118,7 +203,7 @@ public class Guia {
 	}
 
 	public void setNombreRemitente(String nombreRemitente) {
-		this.nombreRemitente = spaces(quitaNulo(nombreRemitente).toUpperCase());
+		this.nombreRemitente = spaces(Utils.quitaNulo(nombreRemitente).toUpperCase());
 	}
 
 	public String getDireccionRemitente() {
@@ -126,7 +211,7 @@ public class Guia {
 	}
 
 	public void setDireccionRemitente(String direccionRemitente) {
-		this.direccionRemitente = spaces(quitaNulo(direccionRemitente).toUpperCase());
+		this.direccionRemitente = spaces(Utils.quitaNulo(direccionRemitente).toUpperCase());
 	}
 
 	public String getTelefonoRemitente() {
@@ -134,7 +219,7 @@ public class Guia {
 	}
 
 	public void setTelefonoRemitente(String telefonoRemitente) {
-		this.telefonoRemitente = spaces(quitaNulo(telefonoRemitente));
+		this.telefonoRemitente = spaces(Utils.quitaNulo(telefonoRemitente));
 	}
 
 	public String getMuniRemitente() {
@@ -142,7 +227,7 @@ public class Guia {
 	}
 
 	public void setMuniRemitente(String muniRemitente) {
-		this.muniRemitente = spaces(quitaNulo(muniRemitente).toUpperCase());
+		this.muniRemitente = spaces(Utils.quitaNulo(muniRemitente).toUpperCase());
 	}
 
 	public String getDescripcionEnvio() {
@@ -150,7 +235,7 @@ public class Guia {
 	}
 
 	public void setDescripcionEnvio(String descripcionEnvio) {
-		this.descripcionEnvio = spaces(quitaNulo(descripcionEnvio));
+		this.descripcionEnvio = spaces(Utils.quitaNulo(descripcionEnvio));
 	}
 
 	public String getCodigoCredito() {
@@ -158,7 +243,7 @@ public class Guia {
 	}
 
 	public void setCodigoCredito(String codigoCredito) {
-		this.codigoCredito = spaces(quitaNulo(codigoCredito));
+		this.codigoCredito = spaces(Utils.quitaNulo(codigoCredito));
 	}
 
 	public String getPiezas() {
@@ -166,7 +251,7 @@ public class Guia {
 	}
 
 	public void setPiezas(String piezas) {
-		this.piezas = spaces(quitaNulo(piezas));
+		this.piezas = spaces(Utils.quitaNulo(piezas));
 	}
 
 	public String getPeso() {
@@ -174,7 +259,7 @@ public class Guia {
 	}
 
 	public void setPeso(String peso) {
-		this.peso = spaces(quitaNulo(peso));
+		this.peso = spaces(Utils.quitaNulo(peso));
 	}
 
 	public String getSeguro() {
@@ -185,7 +270,7 @@ public class Guia {
 	}
 
 	public void setSeguro(String seguro) {
-		this.seguro = quitaNulo(seguro);
+		this.seguro = Utils.quitaNulo(seguro);
 	}
 
 	public String getValorDeclarado() {
@@ -196,7 +281,7 @@ public class Guia {
 	}
 
 	public void setValorDeclarado(String valorDeclarado) {
-		this.valorDeclarado = spaces(quitaNulo(valorDeclarado));
+		this.valorDeclarado = spaces(Utils.quitaNulo(valorDeclarado));
 	}
 
 	public String getTipoCobro() {
@@ -204,7 +289,7 @@ public class Guia {
 	}
 
 	public void setTipoCobro(String tipoCobro) {
-		this.tipoCobro = spaces(quitaNulo(tipoCobro));
+		this.tipoCobro = spaces(Utils.quitaNulo(tipoCobro));
 	}
 
 	public List<GuiaDetalle> getLineasDetalle() {
@@ -231,7 +316,7 @@ public class Guia {
 	}
 
 	public void setCodValorCobrar(String codValorCobrar) {
-		this.codValorCobrar = spaces(quitaNulo(codValorCobrar));
+		this.codValorCobrar = spaces(Utils.quitaNulo(codValorCobrar));
 	}
 
 	public String getSeabrepaquete() {
@@ -242,7 +327,7 @@ public class Guia {
 	}
 
 	public void setSeabrepaquete(String seabrepaquete) {
-		this.seabrepaquete = spaces(quitaNulo(seabrepaquete));
+		this.seabrepaquete = spaces(Utils.quitaNulo(seabrepaquete));
 	}
 
 	public String getCobex() {
@@ -250,7 +335,7 @@ public class Guia {
 	}
 
 	public void setCobex(String cobex) {
-		this.cobex = spaces(quitaNulo(cobex));
+		this.cobex = spaces(Utils.quitaNulo(cobex));
 	}
 
 	public String getFecha() {
@@ -258,7 +343,7 @@ public class Guia {
 	}
 
 	public void setFecha(String fecha) {
-		this.fecha = spaces(quitaNulo(fecha));
+		this.fecha = spaces(Utils.quitaNulo(fecha));
 	}
 
 	public String getNombreDestinatario() {
@@ -266,7 +351,7 @@ public class Guia {
 	}
 
 	public void setNombreDestinatario(String nombreDestinatario) {
-		this.nombreDestinatario = spaces(quitaNulo(nombreDestinatario).toUpperCase());
+		this.nombreDestinatario = spaces(Utils.quitaNulo(nombreDestinatario).toUpperCase());
 	}
 
 	public String getDireccionDestinatario() {
@@ -274,7 +359,7 @@ public class Guia {
 	}
 
 	public void setDireccionDestinatario(String direccionDestinatario) {
-		this.direccionDestinatario = spaces(quitaNulo(direccionDestinatario).toUpperCase());
+		this.direccionDestinatario = spaces(Utils.quitaNulo(direccionDestinatario).toUpperCase());
 	}
 
 	public String getTelefonoDestinatario() {
@@ -282,7 +367,7 @@ public class Guia {
 	}
 
 	public void setTelefonoDestinatario(String telefonoDestinatario) {
-		this.telefonoDestinatario = spaces(quitaNulo(telefonoDestinatario));
+		this.telefonoDestinatario = spaces(Utils.quitaNulo(telefonoDestinatario));
 	}
 
 	public String getMuniDestinatario() {
@@ -290,7 +375,7 @@ public class Guia {
 	}
 
 	public void setMuniDestinatario(String muniDestinatario) {
-		this.muniDestinatario = quitaNulo(muniDestinatario);
+		this.muniDestinatario = Utils.quitaNulo(muniDestinatario);
 	}
 
 	public String getCoberturaExtra() {
@@ -298,11 +383,7 @@ public class Guia {
 	}
 
 	public void setCoberturaExtra(String coberturaExtra) {
-		this.coberturaExtra = spaces(quitaNulo(coberturaExtra));
-	}
-
-	private String quitaNulo(String txt) {
-		return txt == null ? "" : txt.trim();
+		this.coberturaExtra = spaces(Utils.quitaNulo(coberturaExtra));
 	}
 
 	private String spaces(String txt) {
@@ -313,6 +394,22 @@ public class Guia {
 	@Override
 	public String toString() {
 		return numeroGuia + "-" + piezas + " - PTOORI: " + puntoOrigen + " PTODES: " + puntoDestino;
+	}
+
+	public String getUbicacionActual() {
+		return solucionUbicacionActual;
+	}
+
+	public void setUbicacionActual(String ubicacionActual) {
+		this.solucionUbicacionActual = ubicacionActual;
+	}
+
+	public String getSolucionTelefono() {
+		return solucionTelefono;
+	}
+
+	public void setSolucionTelefono(String solucionTelefono) {
+		this.solucionTelefono = solucionTelefono;
 	}
 
 }

@@ -4,6 +4,25 @@ public class ActualizarImpresion {
 
     private String noguia;
     private String ip;
+    private String usuario; 
+    private String fechaImpresion;
+    private String tipoGuia;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getFechaImpresion() {
+        return fechaImpresion;
+    }
+
+    public void setFechaImpresion(String fechaImpresion) {
+        this.fechaImpresion = fechaImpresion;
+    }
 
     public String getNoguia() {
         return noguia;
@@ -20,4 +39,19 @@ public class ActualizarImpresion {
     public void setIp(String ip) {
         this.ip = ip;
     }
+
+    public String getTipoGuia() {
+        return tipoGuia;
+    }
+
+    public void setTipoGuia(String tipoGuia) {
+        this.tipoGuia = tipoGuia;
+    }
+
+    @Override
+    public String toString() {
+        return "ActualizarImpresion [noguia=" + noguia + ", ip=" + ip + ", usuario=" + usuario + ", fechaImpresion="
+                + fechaImpresion + ", tipoGuia=" + tipoGuia + "]";
+    }
+
 }

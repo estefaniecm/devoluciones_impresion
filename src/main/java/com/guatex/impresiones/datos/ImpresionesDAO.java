@@ -3,6 +3,7 @@ package com.guatex.impresiones.datos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ public class ImpresionesDAO {
 			con.setReadOnly(true);
 			con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
-			String query = "SELECT DISTINCT TOP 15 NOGUIA, TGUIAS FROM CONTROL_IMPR_GTX WHERE USUARIO = ? AND ESTADO = ? ; ";
+			String query = "SELECT DISTINCT TOP 15 NOGUIA, TGUIAS, TIPO FROM CONTROL_IMPR_GTX WHERE USUARIO = ? AND ESTADO = ? ; ";
 
 			try (PreparedStatement ps = con.prepareStatement(query)) {
 				for (Usuario u : usuarios) {
@@ -49,6 +50,7 @@ public class ImpresionesDAO {
 							GuiasPendientes gP = new GuiasPendientes();
 							gP.setNoguia(rs.getString("NOGUIA"));
 							gP.setTguias(rs.getInt("TGUIAS"));
+							gP.setTipoGuia(rs.getString("TIPO"));
 							guiasPendientes.add(gP);
 						}
 					}
@@ -112,53 +114,65 @@ public class ImpresionesDAO {
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			for (GuiasPendientes g : guiasP) {
-				ps.setString(1, g.getNoguia());
-				try (ResultSet rs = ps.executeQuery()) {
-					if (rs.next()) {
-						Guia dGuia = new Guia();
-						dGuia.setFecha(rs.getString("FECHA"));
-						dGuia.setNombreRemitente(rs.getString("NOMREM"));
-						dGuia.setNombreDestinatario(rs.getString("NOMDES"));
-						dGuia.setDireccionRemitente(rs.getString("DIRREM"));
-						dGuia.setDireccionDestinatario(rs.getString("DIRDES"));
-						dGuia.setMuniRemitente(rs.getString("MNCPORI"));
-						dGuia.setPuntoOrigen(rs.getString("PTOORI"));
-						dGuia.setMuniDestinatario(rs.getString("MNCPDES"));
-						dGuia.setPuntoDestino(rs.getString("PTODES"));
-						dGuia.setTelefonoRemitente(rs.getString("TELREM"));
-						dGuia.setTelefonoDestinatario(rs.getString("TELDES"));
-						dGuia.setCobex(rs.getString("COBEX"));
-						dGuia.setDescripcionEnvio(rs.getString("OBSERVACIONES"));
-						dGuia.setCodigoCredito(rs.getString("CODCOB"));
-						dGuia.setPiezas(rs.getString("PIEZAS"));
-						dGuia.setPeso(rs.getString("PESO"));
-						dGuia.setSeguro(rs.getString("SEGURO"));
-						dGuia.setValorDeclarado(rs.getString("DECLARADO"));
-						dGuia.setNumeroGuia(rs.getString("NOGUIA"));
-						dGuia.setLlaveCliente(rs.getString("LLAVECLIENTE"));
-						dGuia.setRecogeOficina(rs.getString("RECOGEOFICINA"));
-						dGuia.setCodValorCobrar(rs.getString("COD_VALORACOBRAR"));
-						dGuia.setSeabrepaquete(rs.getString("SEABREPAQUETE"));
-						if (rs.getString("LXCOBRAR").equals("S")) {
-							dGuia.setFormaPago("POR COBRAR");
-						} else if (rs.getString("LPREPAGADA").equals("S")) {
-							dGuia.setFormaPago("PREPAGADA");
-						} else if (rs.getString("LCREDITO").equals("S")) {
-							dGuia.setFormaPago("CREDITO");
-						} else if (rs.getString("LCONTADOFRECUENTE").equals("S")) {
-							dGuia.setFormaPago("CONTADO");
+				if (g.getTipoGuia().equals("SOL")) {
+					Guia dGuia = new Guia();
+
+					dGuia.setNumeroGuia(g.getNoguia());
+					dGuia.setTipoGuia(g.getTipoGuia());
+					cargarInfoSolucion(dGuia, g.getNoguia(), con);
+					listadoInfoGuias.add(dGuia);
+
+				} else if (g.getTipoGuia().equals(("DEV"))) {
+					ps.setString(1, g.getNoguia());
+					try (ResultSet rs = ps.executeQuery()) {
+						if (rs.next()) {
+							Guia dGuia = new Guia();
+							dGuia.setFecha(rs.getString("FECHA"));
+							dGuia.setNombreRemitente(rs.getString("NOMREM"));
+							dGuia.setNombreDestinatario(rs.getString("NOMDES"));
+							dGuia.setDireccionRemitente(rs.getString("DIRREM"));
+							dGuia.setDireccionDestinatario(rs.getString("DIRDES"));
+							dGuia.setMuniRemitente(rs.getString("MNCPORI"));
+							dGuia.setPuntoOrigen(rs.getString("PTOORI"));
+							dGuia.setMuniDestinatario(rs.getString("MNCPDES"));
+							dGuia.setPuntoDestino(rs.getString("PTODES"));
+							dGuia.setTelefonoRemitente(rs.getString("TELREM"));
+							dGuia.setTelefonoDestinatario(rs.getString("TELDES"));
+							dGuia.setCobex(rs.getString("COBEX"));
+							dGuia.setDescripcionEnvio(rs.getString("OBSERVACIONES"));
+							dGuia.setCodigoCredito(rs.getString("CODCOB"));
+							dGuia.setPiezas(rs.getString("PIEZAS"));
+							dGuia.setPeso(rs.getString("PESO"));
+							dGuia.setSeguro(rs.getString("SEGURO"));
+							dGuia.setValorDeclarado(rs.getString("DECLARADO"));
+							dGuia.setNumeroGuia(rs.getString("NOGUIA"));
+							dGuia.setLlaveCliente(rs.getString("LLAVECLIENTE"));
+							dGuia.setRecogeOficina(rs.getString("RECOGEOFICINA"));
+							dGuia.setCodValorCobrar(rs.getString("COD_VALORACOBRAR"));
+							dGuia.setSeabrepaquete(rs.getString("SEABREPAQUETE"));
+							if (rs.getString("LXCOBRAR").equals("S")) {
+								dGuia.setFormaPago("POR COBRAR");
+							} else if (rs.getString("LPREPAGADA").equals("S")) {
+								dGuia.setFormaPago("PREPAGADA");
+							} else if (rs.getString("LCREDITO").equals("S")) {
+								dGuia.setFormaPago("CREDITO");
+							} else if (rs.getString("LCONTADOFRECUENTE").equals("S")) {
+								dGuia.setFormaPago("CONTADO");
+							}
+							dGuia.setLineasDetalle(buscarDetalleGuia(g.getNoguia(), con));
+							dGuia.setGuiasHijas(buscarGuiasHija(g.getNoguia(), con));
+							/* Colocar tarifa */
+							double sumaTarifa = 0;
+							for (GuiaDetalle d : dGuia.getLineasDetalle()) {
+								sumaTarifa = sumaTarifa + Double.valueOf(d.getTarifa());
+							}
+							dGuia.setTarifa(String.format("%.2f", sumaTarifa));
+							dGuia.setTipoGuia(g.getTipoGuia());
+							listadoInfoGuias.add(dGuia);
 						}
-						dGuia.setLineasDetalle(buscarDetalleGuia(g.getNoguia(), con));
-						dGuia.setGuiasHijas(buscarGuiasHija(g.getNoguia(), con));
-						/* Colocar tarifa */
-						double sumaTarifa = 0;
-						for (GuiaDetalle d : dGuia.getLineasDetalle()) {
-							sumaTarifa = sumaTarifa + Double.valueOf(d.getTarifa());
-						}
-						dGuia.setTarifa(String.format("%.2f", sumaTarifa));
-						listadoInfoGuias.add(dGuia);
 					}
 				}
+
 			} // fin FOR noGuias
 
 		} catch (Exception e) {
@@ -228,31 +242,130 @@ public class ImpresionesDAO {
 		return listaGuiasHija;
 	}
 
+	private void cargarInfoSolucion(Guia dGuia, String noguia, Connection con) {
+
+		/*
+		 String querySol = "SELECT "
+            + "    fr.DESCRIPCION AS razonNoEntrega, "
+            + "    cs.DESCRIPCION AS solucionTipo, "
+            + "    sne.DETALLE_SOLUCION AS solucionDetalle, "
+            + "    sne.UBICACION_ACTUAL AS ubicacionActual, "
+            + "    sne.DIRECCION AS solucionDireccion, "
+            + "    sne.TELEFONO AS solucionTelefono, "
+            + "    sne.USUARIO_REGISTRO AS usrRegistroSolucion, "
+            + "    sne.TIMESTAMP AS fechaRegistroSolucion "
+            + "FROM SOLUCIONES_NE sne "
+            + "INNER JOIN FACRAZONES fr ON fr.CODIGO = sne.ID_RAZON_NE "
+            + "INNER JOIN CATALOGO_SOLUCIONES_NE cs ON cs.ID = sne.ID_SOLUCION_APLI "
+            + "WHERE sne.NOGUIA = ? AND sne.ACTIVO = 'S'";
+
+		try (PreparedStatement ps = con.prepareStatement(querySol)) {
+			ps.setString(1, noguia);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					dGuia.setRazonNoEntrega(rs.getString("razonNoEntrega"));
+					dGuia.setSolucionTipo(rs.getString("solucionTipo"));
+					dGuia.setSolucionDetalle(rs.getString("solucionDetalle"));
+					dGuia.setUbicacionActual(rs.getString("ubicacionActual"));
+					dGuia.setSolucionDireccion(rs.getString("solucionDireccion"));
+					dGuia.setSolucionTelefono(rs.getString("solucionTelefono"));
+					dGuia.setUsrRegistroSolucion(rs.getString("usrRegistroSolucion"));
+
+					java.sql.Timestamp ts = rs.getTimestamp("fechaRegistroSolucion");
+					if (ts != null) {
+						dGuia.setSolucionFechaRegistro(
+								ts.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error cargarInfoSolucion: " + e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		*/
+
+		dGuia.setRazonNoEntrega("CLIENTE NO LOCALIZADO EN DIRECCION ORIGINAL. SE REALIZARON INTENTOS DE CONTACTO SIN RESPUESTA Y NO FUE POSIBLE CONFIRMAR LA ENTREGA EN EL DOMICILIO REPORTADO.");
+		
+		dGuia.setUbicacionActual("BODEGA SACOPE. ENVIO EN ESPERA DE REPROGRAMACION PARA NUEVO INTENTO DE ENTREGA CON DATOS ACTUALIZADOS.");
+		
+		dGuia.setSolucionTipo("ACTUALIZACION DE DIRECCION Y TELEFONO. SAC CONFIRMO NUEVOS DATOS DE CONTACTO PARA APOYAR EL SIGUIENTE INTENTO DE ENTREGA.");
+		
+		dGuia.setSolucionDireccion("5 CALLE A 7-47 COLONIA AURORA I ZONA 13 GUATEMALA CIUDAD. REFERENCIA: FRENTE A FARMACIA CENTRAL, PORTON NEGRO.");
+
+		dGuia.setSolucionTelefono("5638-6812 / 4556-2762 / 4210-2210 / 5020-8844 / 3015-7788");
+
+		dGuia.setSolucionDetalle("CLIENTE CONFIRMO QUE LA DIRECCION CORRECTA ES LA INDICADA EN ESTA ETIQUETA. TAMBIEN CONFIRMO LOS NUMEROS TELEFONICOS PARA CONTACTO. SOLICITA REALIZAR NUEVO INTENTO DE ENTREGA EN HORARIO DE OFICINA. COMO REFERENCIA ADICIONAL INDICA QUE EL DOMICILIO SE ENCUENTRA FRENTE A FARMACIA CENTRAL, PORTON NEGRO, CASA DE DOS NIVELES. SAC DEJA CONSTANCIA DE LA ACTUALIZACION PARA APOYO DEL PILOTO EN RUTA Y PARA EVITAR NUEVA NO ENTREGA POR DATOS INCORRECTOS O INCOMPLETOS.");
+		
+		dGuia.setSolucionUsuarioRegistro("SAC_USUARIO001");
+
+		dGuia.setSolucionFechaRegistro("09/07/2026 09:35");
+	}
+
 	/****************************************************************************************************/
 	public String cambiarEstado(ActualizarImpresion req) {
 
 		String respuesta = "";
 
 		try (Connection con = new Conexion().AbrirConexion()) {
-
 			con.setAutoCommit(false);
-
-			con.setTransactionIsolation(
-					Connection.TRANSACTION_READ_COMMITTED);
+			con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
 			String query = "UPDATE CONTROL_IMPR_GTX "
 					+ "SET ESTADO = 'I', "
-					+ "FECHA_IMPRESO = GETDATE(), "
+					+ "FECHA_IMPRESO = COALESCE(?, GETDATE()), "
 					+ "IP_IMPRESO = ? "
+					+ "OUTPUT INSERTED.ID "
 					+ "WHERE NOGUIA = ? ";
 
 			try (PreparedStatement ps = con.prepareStatement(query)) {
-				ps.setString(1, req.getIp());
-				ps.setString(2, req.getNoguia());
+				if (req.getFechaImpresion() != null && !req.getFechaImpresion().trim().isEmpty()) {
+					ps.setTimestamp(1, java.sql.Timestamp.valueOf(
+							LocalDateTime.parse(req.getFechaImpresion())));
+				} else {
+					ps.setNull(1, java.sql.Types.TIMESTAMP);
+				}
 
-				int realizado = ps.executeUpdate();
+				ps.setString(2, req.getIp());
+				ps.setString(3, req.getNoguia());
+
+				boolean tieneResultSet = ps.execute();
+				Integer idControlImpr = null;
+				int realizado = 0;
+
+				if (tieneResultSet) {
+					try (ResultSet rs = ps.getResultSet()) {
+						if (rs.next()) {
+							idControlImpr = rs.getInt("ID");
+							realizado = 1;
+						}
+					}
+				}
 
 				if (realizado > 0) {
+					System.out.println("idControlImpr: " + idControlImpr);
+					/*
+					 * // Guía tipo SOL > ID de CONTROL_IMPR_GTX hacia SOLUCIONES_NE
+					 * if (req.getTipoGuia() != null && req.getTipoGuia().equals("SOL") &&
+					 * idControlImpr != null) {
+					 * 
+					 * String queryUpdateSolucion =
+					 * "UPDATE SOLUCIONES_NE SET ID_CTRL_IMPR_GTX = ? WHERE NOGUIA = ? ";
+					 * 
+					 * try (PreparedStatement psSol = con.prepareStatement(queryUpdateSolucion)) {
+					 * psSol.setInt(1, idControlImpr);
+					 * psSol.setString(2, req.getNoguia());
+					 * 
+					 * int actualizadoSolucion = psSol.executeUpdate();
+					 * 
+					 * if (actualizadoSolucion == 0) {
+					 * ArchivoLogs.getInstance().grabaLogFileAdministrador(
+					 * "------ No se encontró registro en SOLUCIONES_NE para NOGUIA: " +
+					 * req.getNoguia(),
+					 * true);
+					 * }
+					 * }
+					 * }
+					 */
 					con.commit();
 					respuesta = "OK";
 				} else {

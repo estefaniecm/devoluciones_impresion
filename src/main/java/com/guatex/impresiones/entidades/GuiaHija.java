@@ -1,5 +1,7 @@
 package com.guatex.impresiones.entidades;
 
+import com.guatex.impresiones.datos.Utils;
+
 /**
  * 
  * @author ESTEFANIECM
@@ -18,7 +20,7 @@ public class GuiaHija {
 	}
 
 	public void setHguiaHija(String HguiaHija) {
-		this.hguiaHija = quitaNulo(HguiaHija);
+		this.hguiaHija = Utils.quitaNulo(HguiaHija);
 	}
 
 	public String getHnoguiaMadre() {
@@ -26,7 +28,7 @@ public class GuiaHija {
 	}
 
 	public void setHnoguiaMadre(String HnoguiaMadre) {
-		this.hnoguiaMadre = quitaNulo(HnoguiaMadre);
+		this.hnoguiaMadre = Utils.quitaNulo(HnoguiaMadre);
 	}
 
 	public String getpFecha() {
@@ -34,7 +36,7 @@ public class GuiaHija {
 	}
 
 	public void setpFecha(String pFecha) {
-		this.pFecha = quitaNulo(pFecha);
+		this.pFecha = Utils.quitaNulo(pFecha);
 	}
 
 	public String getpHora() {
@@ -42,7 +44,7 @@ public class GuiaHija {
 	}
 
 	public void setpHora(String pHora) {
-		this.pHora = quitaNulo(pHora);
+		this.pHora = Utils.quitaNulo(pHora);
 	}
 
 	public String getpEstatus() {
@@ -50,7 +52,7 @@ public class GuiaHija {
 	}
 
 	public void setpEstatus(String pEstatus) {
-		this.pEstatus = quitaNulo(pEstatus);
+		this.pEstatus = Utils.quitaNulo(pEstatus);
 	}
 
 	public String getHestatus() {
@@ -58,10 +60,7 @@ public class GuiaHija {
 	}
 
 	public void setHestatus(String Hestatus) {
-		this.Hestatus = quitaNulo(Hestatus);
+		this.Hestatus = Utils.quitaNulo(Hestatus);
 	}
-
-	private String quitaNulo(String txt) {
-		return txt == null ? "" : txt.trim();
-	}
+	
 }

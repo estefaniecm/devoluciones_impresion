@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -244,20 +245,19 @@ public class ImpresionesDAO {
 
 	private void cargarInfoSolucion(Guia dGuia, String noguia, Connection con) {
 
-		/*
 		 String querySol = "SELECT "
-            + "    fr.DESCRIPCION AS razonNoEntrega, "
-            + "    cs.DESCRIPCION AS solucionTipo, "
-            + "    sne.DETALLE_SOLUCION AS solucionDetalle, "
-            + "    sne.UBICACION_ACTUAL AS ubicacionActual, "
-            + "    sne.DIRECCION AS solucionDireccion, "
-            + "    sne.TELEFONO AS solucionTelefono, "
-            + "    sne.USUARIO_REGISTRO AS usrRegistroSolucion, "
-            + "    sne.TIMESTAMP AS fechaRegistroSolucion "
+            + "fr.NOMBRE AS razonNoEntrega, "
+            + "cs.SOLUCION_DESC AS solucionTipo, "
+            + "sne.DETALLE_SOLUCION AS solucionDetalle, "
+            + "sne.UBICACION_ACTUAL AS ubicacionActual, "
+            + "sne.DIRECCION AS solucionDireccion, "
+            + "sne.TELEFONO AS solucionTelefono, "
+            + "sne.USUARIO_REGISTRO AS usrRegistroSolucion, "
+            + "sne.TIMESTAMP AS fechaRegistroSolucion "
             + "FROM SOLUCIONES_NE sne "
             + "INNER JOIN FACRAZONES fr ON fr.CODIGO = sne.ID_RAZON_NE "
             + "INNER JOIN CATALOGO_SOLUCIONES_NE cs ON cs.ID = sne.ID_SOLUCION_APLI "
-            + "WHERE sne.NOGUIA = ? AND sne.ACTIVO = 'S'";
+            + "WHERE sne.NOGUIA = ? ";
 
 		try (PreparedStatement ps = con.prepareStatement(querySol)) {
 			ps.setString(1, noguia);
@@ -269,8 +269,7 @@ public class ImpresionesDAO {
 					dGuia.setUbicacionActual(rs.getString("ubicacionActual"));
 					dGuia.setSolucionDireccion(rs.getString("solucionDireccion"));
 					dGuia.setSolucionTelefono(rs.getString("solucionTelefono"));
-					dGuia.setUsrRegistroSolucion(rs.getString("usrRegistroSolucion"));
-
+					dGuia.setSolucionUsuarioRegistro(rs.getString("usrRegistroSolucion"));
 					java.sql.Timestamp ts = rs.getTimestamp("fechaRegistroSolucion");
 					if (ts != null) {
 						dGuia.setSolucionFechaRegistro(
@@ -282,9 +281,9 @@ public class ImpresionesDAO {
 			System.out.println("Error cargarInfoSolucion: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
-		*/
+		
 
-		dGuia.setRazonNoEntrega("CLIENTE NO LOCALIZADO EN DIRECCION ORIGINAL. SE REALIZARON INTENTOS DE CONTACTO SIN RESPUESTA Y NO FUE POSIBLE CONFIRMAR LA ENTREGA EN EL DOMICILIO REPORTADO.");
+		/*dGuia.setRazonNoEntrega("CLIENTE NO LOCALIZADO EN DIRECCION ORIGINAL. SE REALIZARON INTENTOS DE CONTACTO SIN RESPUESTA Y NO FUE POSIBLE CONFIRMAR LA ENTREGA EN EL DOMICILIO REPORTADO.");
 		
 		dGuia.setUbicacionActual("BODEGA SACOPE. ENVIO EN ESPERA DE REPROGRAMACION PARA NUEVO INTENTO DE ENTREGA CON DATOS ACTUALIZADOS.");
 		
@@ -298,7 +297,7 @@ public class ImpresionesDAO {
 		
 		dGuia.setSolucionUsuarioRegistro("SAC_USUARIO001");
 
-		dGuia.setSolucionFechaRegistro("09/07/2026 09:35");
+		dGuia.setSolucionFechaRegistro("09/07/2026 09:35");*/
 	}
 
 	/****************************************************************************************************/
@@ -343,29 +342,28 @@ public class ImpresionesDAO {
 
 				if (realizado > 0) {
 					System.out.println("idControlImpr: " + idControlImpr);
-					/*
-					 * // Guía tipo SOL > ID de CONTROL_IMPR_GTX hacia SOLUCIONES_NE
-					 * if (req.getTipoGuia() != null && req.getTipoGuia().equals("SOL") &&
-					 * idControlImpr != null) {
-					 * 
-					 * String queryUpdateSolucion =
-					 * "UPDATE SOLUCIONES_NE SET ID_CTRL_IMPR_GTX = ? WHERE NOGUIA = ? ";
-					 * 
-					 * try (PreparedStatement psSol = con.prepareStatement(queryUpdateSolucion)) {
-					 * psSol.setInt(1, idControlImpr);
-					 * psSol.setString(2, req.getNoguia());
-					 * 
-					 * int actualizadoSolucion = psSol.executeUpdate();
-					 * 
-					 * if (actualizadoSolucion == 0) {
-					 * ArchivoLogs.getInstance().grabaLogFileAdministrador(
-					 * "------ No se encontró registro en SOLUCIONES_NE para NOGUIA: " +
-					 * req.getNoguia(),
-					 * true);
-					 * }
-					 * }
-					 * }
-					 */
+					
+					 // Guía tipo SOL > ID de CONTROL_IMPR_GTX hacia SOLUCIONES_NE
+					  if (req.getTipoGuia() != null && req.getTipoGuia().equals("SOL") &&
+					  idControlImpr != null) {
+					  
+					  String queryUpdateSolucion = "UPDATE SOLUCIONES_NE "
+                            + "SET ID_CTRL_IMPR_GTX = ?, "
+                            + "ID_ESTADO_SOLUCION = (SELECT ID FROM CATALOGO_SOLUCION_NE_ESTADOS WHERE ESTADO = 'Impresa' AND ACTIVO = 'S') "
+                            + "WHERE NOGUIA = ? ";
+					  
+					  try (PreparedStatement psSol = con.prepareStatement(queryUpdateSolucion)) {
+					  psSol.setInt(1, idControlImpr);
+					  psSol.setString(2, req.getNoguia());
+					  
+					 int actualizadoSolucion = psSol.executeUpdate();
+					  
+					  if (actualizadoSolucion == 0) {
+                            System.out.println("No se encontró registro en SOLUCIONES_NE para NOGUIA: " + req.getNoguia());
+                        }
+					  }
+					  }
+					
 					con.commit();
 					respuesta = "OK";
 				} else {
